@@ -1,0 +1,10 @@
+# Note that the scripts are timed to make sure they don't overlap
+
+# Backup every 6 hours
+0 */6 * * * bash -l -c "cd ~/backup-scripts; source .secrets; ./create-backup.sh"
+
+# Prune backups once a day, before syncing to Backblaze B2
+0 1 * * * bash -l -c "cd ~/backup-scripts; source .secrets; ./prune-borg-backups.sh"
+
+# Sync backups to Backblaze B2 once a day
+0 2 * * * bash -l -c "cd ~/backup-scripts; source .secrets; ./sync-borg-to-b2.sh"
